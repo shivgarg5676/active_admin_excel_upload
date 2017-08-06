@@ -3,8 +3,7 @@
 //
 //= require action_cable
 //= require_self
-//= require_tree ./channels
-//= require active_admin_excel_upload/application
+//= require_tree ./
 (function() {
   this.App || (this.App = {});
 

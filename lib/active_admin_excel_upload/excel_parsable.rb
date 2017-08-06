@@ -3,29 +3,31 @@ module ActiveAdminExcelUpload
     extend ActiveSupport::Concern
 
     class_methods do
-      def excel_create_record(row, index, header)
-        ActionCable.server.broadcast "excel_channel_#{current_admin_user.id}", message: "processing for #{row}"
-        object = Hash[header_downcase.zip row]
+      def excel_create_record(row, index, header,channel_name)
+        ActionCable.server.broadcast channel_name, message: "processing for #{row}"
+        object = Hash[header.zip row]
         record = self.new(object)
         if record.save
-          ActionCable.server.broadcast "excel_channel_#{current_admin_user.id}", message: "Successfully cureated record for #{row}, id: #{record.id}"
+          ActionCable.server.broadcast channel_name, message: "Successfully cureated record for #{row}, id: #{record.id}"
         else
-          ActionCable.server.broadcast "excel_channel_#{current_admin_user.id}", message: "Could not create record for #{row}, error: #{record.errors}"
+          ActionCable.server.broadcast channel_name, message: "Could not create record for #{row}, error: #{record.errors}"
         end
       end
       def process_sheet(sheet,current_admin_user)
         xlsx = Roo::Spreadsheet.open(sheet)
         sheet = xlsx.sheet(xlsx.sheets.index(self.table_name))
         header = sheet.row(1)
+        channel_name = "excel_channel_#{current_admin_user.id}"
         header_downcase = header.map(&:parameterize).map(&:underscore)
-        ActionCable.server.broadcast "excel_channel_#{current_admin_user.id}", message: "Start processing sheet #{self.table_name}"
+        ActionCable.server.broadcast channel_name, message: "Start processing sheet #{self.table_name}"
         sheet.parse.each_with_index do |row, index|
           begin
-            excel_create_record(row,index,header)
+            self.excel_create_record(row,index,header_downcase,channel_name)
           rescue StandardError => e
-            ActionCable.server.broadcast "excel_channel_#{current_admin_user.id}", message: "Exception while processing #{row}, Exception: #{e.message}"
+            ActionCable.server.broadcast channel_name, message: "Exception while processing #{row}, Exception: #{e.message}"
           end
         end
+        ActionCable.server.broadcast channel_name, message: "End processing sheet #{self.table_name}"
       end
     end
   end

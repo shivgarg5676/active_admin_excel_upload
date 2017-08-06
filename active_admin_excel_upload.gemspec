@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = ActiveAdminExcelUpload::VERSION
   s.authors     = [""]
   s.email       = [""]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ActiveAdminExcelUpload."
-  s.description = "TODO: Description of ActiveAdminExcelUpload."
+  s.homepage    = ""
+  s.summary     = ""
+  s.description = ""
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

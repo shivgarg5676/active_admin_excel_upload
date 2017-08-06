@@ -1,0 +1,20 @@
+<%= form_for :dump, :url=>{:action=>"import_excel"}, :html => { :multipart => true } do |f| %>
+  <table>
+    <tr>
+      <td>
+        <label for="dump_file">
+          Select a Excel File :
+        </label>
+      </td>
+      <td>
+        <%= f.file_field :file %>
+      </td>
+
+    </tr>
+    <tr>
+      <td>
+        <%= submit_tag 'Submit' %>
+      </td>
+    </tr>
+  </table>
+<% end %>

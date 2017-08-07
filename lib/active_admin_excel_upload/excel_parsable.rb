@@ -3,14 +3,6 @@ module ActiveAdminExcelUpload
     extend ActiveSupport::Concern
 
     class_methods do
-      def excel_render_message
-        ApplicationController.render(
-          partial: 'admin/excel/message.html.erb',
-          locals: {
-            message: message,
-            username: current_user
-        })
-      end
       def excel_create_record(row, index, header,channel_name)
         ActionCable.server.broadcast channel_name, message: "processing for #{row}"
         object = Hash[header.zip row]

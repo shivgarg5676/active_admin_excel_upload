@@ -10,7 +10,7 @@ module ActiveAdminExcelUpload
         if record.save
           ActionCable.server.broadcast channel_name, message: "Successfully cureated record for #{row}, id: #{record.id}"
         else
-          ActionCable.server.broadcast channel_name, message: "Could not create record for #{row}, error: #{record.errors}"
+          ActionCable.server.broadcast channel_name, message: "Could not create record for #{row}, error: #{record.errors.messages}"
         end
       end
       def process_sheet(sheet,current_admin_user)

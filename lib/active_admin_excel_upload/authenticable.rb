@@ -10,8 +10,8 @@ module ActiveAdminExcelUpload
       end
       private
         def find_verified_user
-          if env['warden'].user
-            env['warden'].user
+          if request.env['warden'].user
+            request.env['warden'].user
           else
             reject_unauthorized_connection
           end

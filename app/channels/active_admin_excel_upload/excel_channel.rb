@@ -1,5 +1,5 @@
 module ActiveAdminExcelUpload
-  class ExcelChannel < ::ApplicationCable::Channel
+  class ExcelChannel < ApplicationCable::Channel
     def subscribed
       # stream_from "some_channel"
       if ActiveAdminExcelUpload.configuration.use_default_connecion_authentication

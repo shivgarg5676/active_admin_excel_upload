@@ -20,11 +20,6 @@ module ActiveAdminExcelUpload
         ExcelParserJob.perform_later(self.resource_class.to_s,final_path.to_s,self.send(ActiveAdmin.application.current_user_method))
         redirect_to :action => :show_excel_upload_result, :notice => "CSV imported successfully!"
       end
-      controller do
-        def permitted_params
-          params.permit!
-        end
-      end
     end
   end
 end

@@ -8,7 +8,7 @@ module ActiveAdminExcelUpload
     end
     def perform(klass,file_path,current_admin_user)
       # Do something later
-      klass.constantize.send(:process_sheet, file_path, current_admin_user)
+      klass.constantize.send(:excel_process_sheet, file_path, current_admin_user)
       FileUtils.rm(file_path)
     end
   end

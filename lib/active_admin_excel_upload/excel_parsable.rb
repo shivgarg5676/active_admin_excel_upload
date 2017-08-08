@@ -13,7 +13,7 @@ module ActiveAdminExcelUpload
           ActionCable.server.broadcast channel_name, message: "Could not create record for #{row}, error: #{record.errors.messages}"
         end
       end
-      def process_sheet(sheet,current_admin_user)
+      def excel_process_sheet(sheet,current_admin_user)
         xlsx = Roo::Spreadsheet.open(sheet)
         sheet = xlsx.sheet(xlsx.sheets.index(self.table_name))
         header = sheet.row(1)

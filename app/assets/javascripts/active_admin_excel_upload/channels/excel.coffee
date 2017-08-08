@@ -10,6 +10,9 @@ App.room = App.cable.subscriptions.create "ActiveAdminExcelUpload::ExcelChannel"
     para = document.createElement("P");
     t = document.createTextNode(data["message"]);
     para.appendChild(t);
+    para.style.borderBottom = "1px solid lightgrey";
+    para.style.margin = "0px";
+    para.style.padding= "10px";
     document.getElementById("show_status").appendChild(para);
 
   speak: ->

@@ -1,4 +1,4 @@
-# ActiveAdminExcelUpload
+# ActiveAdminExcelUpload (active_admin_excel_upload)
 A gem for excel upload for active admin. It is designed for large excel sheets that consume too much time on normal process. It uses active job to process sheets on a different queue and action cables to show progress of your upload. Active admin excel upload brings rails convention for excel uploads.
 
 

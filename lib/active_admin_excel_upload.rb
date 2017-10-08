@@ -25,4 +25,14 @@ module ActiveAdminExcelUpload
      @connection_identifier = :current_admin_user
    end
   end
+
+
+  # find a better place for this method
+  def self.move_file_to_rails_tmp(params)
+    file_name = DateTime.now.to_s + params[:dump][:file].original_filename
+    tmp = params[:dump][:file].tempfile
+    final_path = Rails.root.join('tmp', file_name)
+    FileUtils.move tmp.path, final_path
+    return final_path
+  end
 end

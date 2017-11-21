@@ -1,4 +1,4 @@
-require 'roo'
+# require 'roo'
 module ActiveAdminExcelUpload
   module ExcelParsable
     extend ActiveSupport::Concern

@@ -4,6 +4,7 @@ require "active_admin_excel_upload/dsl"
 require "active_admin_excel_upload/railtie"
 require "active_admin_excel_upload/authenticable"
 require "active_admin_excel_upload/excel_parsable"
+require "roo"
 module ActiveAdminExcelUpload
   class << self
    attr_accessor :configuration

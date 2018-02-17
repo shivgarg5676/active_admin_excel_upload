@@ -27,6 +27,10 @@ Or install it yourself as:
 $ gem install active_admin_excel_upload
 ```
 
+##Config generator
+```bash
+$rails g active_admin_excel_upload:install
+```
 
 ## Usage
 configure your active admin resource to use it.

@@ -47,6 +47,21 @@ set your queue backend in application.rb
 ```
 You can use any queuing backend e.g resque etc.
 
+By default active_admin_excel_upload uses excels_queue to process files. so set this in your queuing backend's config.
+
+```yml
+  :concurrency: 5
+  staging:
+  :concurrency: 10
+  production:
+  :concurrency: 20
+  :queues:
+    - excels_queue
+    - critical
+    - default
+    - low
+```
+
 You may need redis adapter in cable.yml to work it in dev mode. By default rails uses redis adaper for production mode.
 ```ruby
   development:

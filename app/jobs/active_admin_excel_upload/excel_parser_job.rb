@@ -1,7 +1,7 @@
 module ActiveAdminExcelUpload
 
   class ExcelParserJob < ApplicationJob
-    queue_as :excels_queue
+    queue_as ActiveAdminExcelUpload.configuration.active_job_queue
 
     before_perform do |job|
       sleep 5

@@ -46,21 +46,7 @@ set your queue backend in application.rb
   config.active_job.queue_adapter = :sidekiq
 ```
 You can use any queuing backend e.g resque etc.
-
-By default active_admin_excel_upload uses "excels_queue" to process files. so set this in your queuing backend's config.
-
-```yml
-  :concurrency: 5
-  staging:
-    :concurrency: 10
-  production:
-    :concurrency: 20
-  :queues:
-    - excels_queue
-    - critical
-    - default
-    - low
-```
+You can set active job queue to be used for excel uploads in config/initializers/active_admin_excel_upload.rb
 
 You may need redis adapter in cable.yml to work it in dev mode. By default rails uses redis adapter for production mode.
 ```ruby
@@ -84,6 +70,7 @@ config/initializers/active_admin_excel_upload.rb
   ActiveAdminExcelUpload.configure do |config|
     config.use_default_connecion_authentication = false
     config.connection_identifier = :current_admin_user
+    config.active_job_queue = :default
   end
 ```
 
@@ -120,6 +107,12 @@ ApplicationController.renderer.render(partial: 'messages/message', locals: { mes
 ## Contributing
 This gem is in very new state and we are actively looking for contributors to join us and improve and increase the functionality of this gem.
 
+We are currently working on following features.
+
+User should be able to run validations on the sheet before processing the sheet.
+User should be able to do bulk upload.
+User should be able to see the failed and passed incidents with clarity.
+User should be able to execute preprocessing and post processing hooks.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

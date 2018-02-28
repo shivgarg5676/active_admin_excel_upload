@@ -13,7 +13,7 @@ module ActiveAdminExcelUpload
         object = Hash[header.zip row]
         record = self.new(object)
         if record.save
-          self.publish_to_channel(channel_name,"Successfully cureated record for #{row}, id: #{record.id}")
+          self.publish_to_channel(channel_name,"Successfully created record for #{row}, id: #{record.id}")
         else
           self.publish_to_channel(channel_name,"Could not create record for #{row}, error: #{record.errors.messages}")
         end

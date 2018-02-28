@@ -21,9 +21,11 @@ module ActiveAdminExcelUpload
   class Configuration
    attr_accessor :use_default_connecion_authentication
    attr_accessor :connection_identifier
+   attr_accessor :active_job_queue
    def initialize
      @use_default_connecion_authentication = true
      @connection_identifier = :current_admin_user
+     @active_job_queue = :default
    end
   end
 

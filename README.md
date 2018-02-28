@@ -46,8 +46,9 @@ set your queue backend in application.rb
   config.active_job.queue_adapter = :sidekiq
 ```
 You can use any queuing backend e.g resque etc.
+You can set active job queue to be used for excel uploads in config/initializers/active_admin_excel_upload.rb
 
-You may need redis adapter in cable.yml to work it in dev mode. By default rails uses redis adaper for production mode.
+You may need redis adapter in cable.yml to work it in dev mode. By default rails uses redis adapter for production mode.
 ```ruby
   development:
     adapter: redis
@@ -69,6 +70,7 @@ config/initializers/active_admin_excel_upload.rb
   ActiveAdminExcelUpload.configure do |config|
     config.use_default_connecion_authentication = false
     config.connection_identifier = :current_admin_user
+    config.active_job_queue = :default
   end
 ```
 
@@ -78,12 +80,12 @@ config/initializers/active_admin_excel_upload.rb
 Active admin excel upload defines a method in ActiveRecord::Base class. if you want custom behaviour for your row you can define a method in your model as follows
 
 ```ruby
-  def excel_create_record(row, index, header,channel_name)
+  def excel_create_record(row, index, header, channel_name)
     ActionCable.server.broadcast channel_name, message: "processing for #{row}"
     object = Hash[header.zip row]
     record = self.new(object)
     if record.save
-      ActionCable.server.broadcast channel_name, message: "Successfully cureated record for #{row}, id: #{record.id}"
+      ActionCable.server.broadcast channel_name, message: "Successfully created record for #{row}, id: #{record.id}"
     else
       ActionCable.server.broadcast channel_name, message: "Could not create record for #{row}, error: #{record.errors.messages}"
     end
@@ -92,18 +94,25 @@ Active admin excel upload defines a method in ActiveRecord::Base class. if you w
 active_admin_excel_upload send 4 arguments to this method. First is the array for the current processing row in the excel. Second is the index for the row. Third is header of the sheet. Fourth is the channel_name to send messages on.
 
 ```ruby
-  ActionCable.server.broadcast channel_name, message: "Successfully cureated record for #{row}, id: #{record.id}"
+  ActionCable.server.broadcast channel_name, message: "Successfully created record for #{row}, id: #{record.id}"
 ```
-This particular line is used to broadcast messsages on particular channel.
+This particular line is used to broadcast messages on particular channel.
 
-By default it sends string as message but you can render anuthing you want. e.g
+By default it sends string as message but you can render anything you want. e.g
 
 ``` ruby
 ApplicationController.renderer.render(partial: 'messages/message', locals: { message: message })
 ```
 
 ## Contributing
-Contribution directions go here.
+This gem is in very new state and we are actively looking for contributors to join us and improve and increase the functionality of this gem.
+
+We are currently working on following features.
+
+User should be able to run validations on the sheet before processing the sheet.
+User should be able to do bulk upload.
+User should be able to see the failed and passed incidents with clarity.
+User should be able to execute preprocessing and post processing hooks.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
